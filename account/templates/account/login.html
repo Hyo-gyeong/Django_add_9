@@ -1,0 +1,31 @@
+<li class="nav-item">
+  <a class="nav-link active" aria-current="page" href="{% url 'like:index' %}">Home</a>
+</li>
+{% if message %}
+ {% for m in messages %}
+ <div class="alert alert-{{messages.tag}}">{{m}}</div>
+ {% endfor %}
+{% endif %} 
+
+{% if user.is_authenticated %}
+<li class="nav-item">
+  <a class="nav-link" href="{% url 'like:create' %}">사진 올리기</a>
+</li>
+<li>
+  <a class="dropdown-item" href="{% url 'account:logout' %}">{{user}}님 Logout</a>
+</li>
+{% else %}
+<li>
+  <a class="dropdown-item" href="{% url 'account:login' %}">Login</a>
+</li>
+{% endif %}
+<div class="card">
+  <div class="card-body">
+    <form method="post">
+      <center><h2>로그인 정보를 입력하세요.</h2></center>
+        {% csrf_token %}
+        {{form.as_p}}
+      <button type="submit" style="float: right;" class="btn btn-info">Submit</button>
+    </form>
+  </div>
+</div>
