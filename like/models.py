@@ -16,9 +16,8 @@ class Photo(models.Model):
   #timeline_photo폴더에 연도, 월, 일을 만들어서 사진을 저장 -> 년원일을 지정하면 파일끼리 충돌 방지 가능
   created = models.DateTimeField(auto_now_add = True) #최초 DB입력시간
   updated = models.DateTimeField(auto_now = True) #변화가 있을 때 즉, 수정했을 때의 시각
-
   #좋아요
-  like = models.ManyToManyField(User, related_name='like')
+  like = models.ManyToManyField(User, related_name='like', blank = True)
 
   def __str__(self):
     return self.text

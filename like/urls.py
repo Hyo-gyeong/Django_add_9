@@ -12,5 +12,5 @@ urlpatterns = [
     path('delete/<int:post_id>', views.delete, name="delete"),
     path('update/<int:pk>', PhotoUpdate.as_view(), name="update"),
     path('detail/<int:pk>', PhotoDetail.as_view(), name="detail"),
-    path('likes/', views.post_likes, name="post_likes"),
+    path('like/', views.post_likes, name="post_likes"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -54,19 +54,22 @@ class PhotoDetail(DetailView):
   model = Photo
   template_name_sufffix = '_detail'
 
-    
+
 def post_likes(request): 
-    if request.is_ajax(): #ajax 방식일 때 아래 코드 실행
-        blog_id = request.GET['blog_id'] #좋아요를 누른 게시물id (blog_id)가지고 오기
-        post = Photo.objects.get(id=blog_id) 
-				
-        user = request.user #request.user : 현재 로그인한 유저
-        if post.like.filter(id = user.id).exists(): #이미 좋아요를 누른 유저일 때
-            post.like.remove(user) #like field에 현재 유저 추가
-            message = "좋아요 취소" #화면에 띄울 메세지
-        else: #좋아요를 누르지 않은 유저일 때
-            post.like.add(user) #like field에 현재 유저 삭제
-            message = "좋아요" #화면에 띄울 메세지
-        # post.like.count() : 게시물이 받은 좋아요 수  
-        context = {'like_count' : post.like.count(),"message":message}
-        return HttpResponse(json.dumps(context), content_type='application/json')   
+  if request.is_ajax(): #ajax 방식일 때 아래 코드 실행
+    blog_id = request.GET['blog_id'] #좋아요를 누른 게시물id (blog_id)가지고 오기
+    post = Photo.objects.get(id=blog_id) 
+    
+    user = request.user #request.user : 현재 로그인한 유저
+    if post.like.filter(id = user.id).exists(): #이미 좋아요를 누른 유저일 때
+      post.like.remove(user) #like field에 현재 유저 추가
+      message = "좋아요 취소" #화면에 띄울 메세지
+    else: #좋아요를 누르지 않은 유저일 때
+      post.like.add(user) #like field에 현재 유저 삭제
+      message = "좋아요" #화면에 띄울 메세지
+    #post.like.count() : 게시물이 받은 좋아요 수  
+  context = {
+    'like_count' : post.like.count(),
+    "message":message,
+  }
+  return HttpResponse(json.dumps(context), content_type='application/json')   
