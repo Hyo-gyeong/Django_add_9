@@ -67,9 +67,9 @@ def post_likes(request):
     else: #좋아요를 누르지 않은 유저일 때
       post.like.add(user) #like field에 현재 유저 삭제
       message = "좋아요" #화면에 띄울 메세지
-    #post.like.count() : 게시물이 받은 좋아요 수  
+      #post.like.count() : 게시물이 받은 좋아요 수  
   context = {
     'like_count' : post.like.count(),
-    "message":message,
+    'message':message,
   }
   return HttpResponse(json.dumps(context), content_type='application/json')   

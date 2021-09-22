@@ -11,26 +11,45 @@
       width:20px;
       height:20px;
     }
+    .flex_item{
+      margin-top: 40px;
+      max-width: 400px;
+    }
+    button{
+      padding: 0;
+      border: none;
+      background: none;
+    }
+    a{
+      color:darkblue
+    }
+    .card-title, .text-muted{
+      font-size: 10px;
+      color:darkgray;
+    }
+    .card-title{
+      float: right;
+    }
+    img{
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
   </style>
 </head>
+
 {% for post in object_list %}
 <div class="flex_item">
-  <img src="{{ post.image.url }}"alt="...">
-  <div class="card-body">
-    <h5 class="card-title">{{ post.author }}님의 게시글</h5>
+  <img src="{{ post.image.url }}"alt="..."><br>
+  <small class="card-title">{{ post.author }}님의 게시글</small><br>
     <p class="card-text">{{ post.text }}</p>
-  </div>
   <div class="card-body">
-    <a href="{% url 'like:detail' post.id %}" class="card-link">댓글달기</a>
+    <a href="{% url 'like:detail' post.id %}" class="card-link">💬</a>
     {% if user == post.author %}
     <a href="{% url 'like:update' post.id %}" class="card-link">수정</a>
     <a href="{% url 'like:delete' post.id %}" class="card-link">삭제</a>
-    {% endif %}
-  </div>
-  <div class="card-footer">
-    <small class="text-muted">생성일 : {{ post.created }}</small><br>
-    <small class="text-muted">수정일 : {{ post.updated }}</small>
-  </div>
+    {% endif %}    
+    <a href="{% url 'like:detail' post.id %}" class="card-link">자세히</a>
   {% if user.is_authenticated %}
   <button id="{{post.id}}" onclick="post_like(this.id)">
     {%if request.user in post.like.all%}
@@ -40,15 +59,19 @@
     <!-- 로그인 한 유저가 좋아요를 누른 유저가 아닐 때  -->
     <img class="heart" id="heart{{post.id}}" src="{% static 'empty_heart.png' %}" alt="empty_heart">
     {%endif%}
-    <span class="heart" id="like_count{{post.id}}">{{post.like.count}}</span>
   </button>
   {% else %}
   <button id="{{post.id}}" onclick="alert('로그인이 필요합니다')">
     <img class="heart" id="heart" src="{% static 'empty_heart.png' %}" alt="empty_heart">
-    <span id="like_count">{{post.like.count}}</span>
   </button>
-  {% endif %}  
+  {% endif %} 
+  <span id="like_count{{post.id}}">{{post.like.count}}</span>
+  <br>
+  <small class="text-muted">생성일 : {{ post.created }}</small><br>
+  <small class="text-muted">수정일 : {{ post.updated }}</small><br>
+  </div> 
 </div>
+  {% endfor %}  
 <script type="text/javascript">
   function post_like(p_id) {
     $.ajax({
@@ -75,6 +98,4 @@
     })
   }
   </script>
-  {% endfor %}  
-
 {% endblock %}

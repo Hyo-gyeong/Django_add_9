@@ -71,22 +71,7 @@ def delete_city(request, city_name):
   return redirect('home')
 
 def ko_weather(request):
-  url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst'
-  queryParams = '?' + urlencode(
-    { quote_plus('ServiceKey') : 'Jpp57VnJpYmaRwehqiOkIiQArKUPSriqhsjo1Qmm138SgZVE4eeSJaF8%2BBkwWSubbIHLe1P%2BP%2FNQHhLncVdvUw%3D%3D', 
-    quote_plus('pageNo') : '1', # 페이지 번호 // default : 1
-    quote_plus('numOfRows') : '10', # 한 페이지 결과 수 // default : 10
-    quote_plus('dataType') : 'JSON', # 응답자료형식
-    quote_plus('base_date') : '20151201', # 발표일자 // yyyymmdd
-    quote_plus('base_time') : '0600', # 발표시각 // HHMM, 매 시각 40분 이후 호출
-    quote_plus('nx') : '18', # 예보지점 X 좌표
-    quote_plus('ny') : '1' } # 예보지점 Y 좌표
-  )
-
-  request = urllib.request.META(url + unquote(queryParams))
-  response_body = urlopen(request).read()
+  url = 'http://apis.data.go.kr/1360000/VilageFcstInfoService/getUltraSrtNcst?ServiceKey=Jpp57VnJpYmaRwehqiOkIiQArKUPSriqhsjo1Qmm138SgZVE4eeSJaF8%2BBkwWSubbIHLe1P%2BP%2FNQHhLncVdvUw%3D%3D&pageNo=1&numOfRows=10&dataType=JSON&base_date=20210531&base_time=0600&nx=18&ny=1'
+  response_body = urlopen(url).read()
   data = json.loads(response_body)
-  print("**************************")
-  print(data)
-  print("**************************")
-  return render(request, 'ko_weather.html', data)
+  return render(request, 'ko_weather.html', {'data': data['response']['body']['items']['item']})

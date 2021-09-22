@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'like.apps.LikeConfig',
     'account.apps.AccountConfig',
     'emailapp.apps.EmailappConfig',
+    'chat.apps.ChatConfig',
+    'weather.apps.WeatherConfig',
+    'star.apps.StarConfig',
 ]
 
 MIDDLEWARE = [
@@ -128,7 +131,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'like','static')
+    os.path.join(BASE_DIR,'like','static'),
+    os.path.join(BASE_DIR,'star','static/img')
 ] #static 파일들이 어디에 있는지를 쓰는곳
 STATIC_ROOT= os.path.join(BASE_DIR,'static')
 #static 파일들이 어디로 모일 것인지를 쓰는 곳

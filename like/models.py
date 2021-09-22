@@ -27,4 +27,4 @@ class Photo(models.Model):
 
   #상세페이지로 이동하도록 absolute_url 설정 
   def get_absolute_url(self):
-    return reverse('photo:detail', args=[self.id]) #이후에 views에서 return super가 나오게 되면 자동적으로 absolute_url 이 실행
+    return reverse('like:detail', args=[self.id]) #이후에 views에서 return super가 나오게 되면 자동적으로 absolute_url 이 실행
